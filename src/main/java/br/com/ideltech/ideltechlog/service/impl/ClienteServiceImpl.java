@@ -2,7 +2,6 @@ package br.com.ideltech.ideltechlog.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,12 +10,18 @@ import br.com.ideltech.ideltechlog.entity.form.ClienteForm;
 import br.com.ideltech.ideltechlog.exception.NegocioException;
 import br.com.ideltech.ideltechlog.repository.ClienteRepository;
 import br.com.ideltech.ideltechlog.service.IClienteService;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class ClienteServiceImpl implements IClienteService {
 	
-	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	public Cliente findById(Long id) {
+		
+		return clienteRepository.findById(id).orElseThrow(() -> new NegocioException("Cliente não localizado."));
+	}
 
 	@Override
 	public Cliente create(ClienteForm form) {		

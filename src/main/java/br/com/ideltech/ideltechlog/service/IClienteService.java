@@ -9,6 +9,8 @@ import br.com.ideltech.ideltechlog.entity.form.ClienteForm;
 public interface IClienteService {
 	
 	Cliente create(ClienteForm form);
+	
+	Cliente findById(Long id);
 
     Cliente getById(Long id);
 
