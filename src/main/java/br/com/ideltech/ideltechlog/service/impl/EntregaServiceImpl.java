@@ -9,11 +9,12 @@ import br.com.ideltech.ideltechlog.entity.Cliente;
 import br.com.ideltech.ideltechlog.entity.Entrega;
 import br.com.ideltech.ideltechlog.entity.StatusEntrega;
 import br.com.ideltech.ideltechlog.repository.EntregaRepository;
+import br.com.ideltech.ideltechlog.service.IEntregaService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
-public class EntregaServiceImpl {
+public class EntregaServiceImpl implements IEntregaService {
 	
 	private EntregaRepository entregaRepository;
 	private ClienteServiceImpl clienteServiceImpl;
