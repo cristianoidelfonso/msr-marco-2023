@@ -1,5 +1,6 @@
 package br.com.ideltech.ideltechlog.entity;
 
+import br.com.ideltech.ideltechlog.validation.ValidationGroups;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ import lombok.NoArgsConstructor;
 public class Cliente {
 
 	@Id
+	@NotNull(groups = ValidationGroups.ClienteId.class)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
