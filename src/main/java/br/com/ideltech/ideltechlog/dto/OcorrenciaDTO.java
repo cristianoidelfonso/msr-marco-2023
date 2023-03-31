@@ -1,24 +1,22 @@
 package br.com.ideltech.ideltechlog.dto;
 
+import java.time.OffsetDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DestinatarioDTO {
+@Getter
+@Setter
+public class OcorrenciaDTO {
 
-	private String nome;
+	private Long id;
 	
-	private String logradouro;
+	private String descricao;
 	
-	private String numero;
-	
-	private String complemento;
-	
-	private String bairro;
+	private OffsetDateTime dataRegistro;
 	
 }

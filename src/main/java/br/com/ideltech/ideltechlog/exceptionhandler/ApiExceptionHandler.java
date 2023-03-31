@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.ideltech.ideltechlog.exception.EntidadeNaoEncontradaException;
 import br.com.ideltech.ideltechlog.exception.NegocioException;
 
 @ControllerAdvice
@@ -64,6 +65,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
+	
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<Object> hanldeEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request) {
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		
+		Problem problem = new Problem();
+		problem.setStatus(status.value());
+		problem.setDataHora(OffsetDateTime.now());
+		problem.setTitulo(ex.getMessage());
+		
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
 	
 	
 }

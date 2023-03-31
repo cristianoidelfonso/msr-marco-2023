@@ -2,11 +2,14 @@ package br.com.ideltech.ideltechlog.entity;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import br.com.ideltech.ideltechlog.validation.ValidationGroups;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -65,4 +69,33 @@ public class Entrega {
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	private OffsetDateTime dataFinalizacao;
+	
+	@OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL)
+	private List<Ocorrencia> ocorrencias = new ArrayList<>();
+
+	
+	public Ocorrencia adicionarOcorrenciaDescricao(String descricao) {
+		
+		Ocorrencia ocorrencia = new Ocorrencia();
+		ocorrencia.setDescricao(descricao);
+		ocorrencia.setDataRegistro(OffsetDateTime.now());
+		ocorrencia.setEntrega(this);
+		
+		this.getOcorrencias().add(ocorrencia);
+		
+		return ocorrencia;
+	
+	}
+
+	public Ocorrencia adicionarOcorrencia(String descricao) {
+		
+		Ocorrencia ocorrencia = new Ocorrencia();
+		ocorrencia.setDescricao(descricao);
+		ocorrencia.setDataRegistro(OffsetDateTime.now());
+		ocorrencia.setEntrega(this);
+		
+		this.getOcorrencias().add(ocorrencia);
+		
+		return ocorrencia;
+	}
 }

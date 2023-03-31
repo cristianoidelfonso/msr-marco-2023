@@ -16,11 +16,17 @@ import lombok.Setter;
 public class EntregaDTO {
 	
 	private Long id;
+	
 	private ClienteResumoModel cliente;
+	
 	private DestinatarioDTO destinatario;
+	
 	private BigDecimal taxa;
+	
 	private StatusEntrega status;
+	
 	private OffsetDateTime dataPedido;
+	
 	private OffsetDateTime dataFinalizacao;
 
 }
