@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,6 +19,7 @@ import br.com.ideltech.ideltechlog.dto.input.EntregaInput;
 import br.com.ideltech.ideltechlog.entity.Entrega;
 import br.com.ideltech.ideltechlog.repository.EntregaRepository;
 import br.com.ideltech.ideltechlog.service.impl.EntregaServiceImpl;
+import br.com.ideltech.ideltechlog.service.impl.FinalizacaoEntregaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -29,6 +31,7 @@ public class EntregaController {
 	private EntregaRepository entregaRepository;
 	private EntregaServiceImpl entregaService;
 	private EntregaAssembler entregaAssembler;
+	private FinalizacaoEntregaService finalizacaoEntregaService;
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -53,6 +56,14 @@ public class EntregaController {
 		return entregaRepository.findById(id)
 									.map((entrega) -> ResponseEntity.ok(entregaAssembler.toModel(entrega)))
 									.orElse(ResponseEntity.notFound().build());
+		
+	}
+	
+	@PutMapping("/{entregaId}/finalizacao")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void finalizar(@PathVariable Long entregaId) {
+		
+		finalizacaoEntregaService.finalizar(entregaId);
 		
 	}
 	

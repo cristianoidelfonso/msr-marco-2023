@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+import br.com.ideltech.ideltechlog.exception.NegocioException;
 import br.com.ideltech.ideltechlog.validation.ValidationGroups;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -74,19 +75,6 @@ public class Entrega {
 	private List<Ocorrencia> ocorrencias = new ArrayList<>();
 
 	
-	public Ocorrencia adicionarOcorrenciaDescricao(String descricao) {
-		
-		Ocorrencia ocorrencia = new Ocorrencia();
-		ocorrencia.setDescricao(descricao);
-		ocorrencia.setDataRegistro(OffsetDateTime.now());
-		ocorrencia.setEntrega(this);
-		
-		this.getOcorrencias().add(ocorrencia);
-		
-		return ocorrencia;
-	
-	}
-
 	public Ocorrencia adicionarOcorrencia(String descricao) {
 		
 		Ocorrencia ocorrencia = new Ocorrencia();
@@ -98,4 +86,23 @@ public class Entrega {
 		
 		return ocorrencia;
 	}
+
+
+	public void finalizar() {
+		if(naoPodeSerFinalizada()) {
+			throw new NegocioException("Entrega não pode ser finalizada.");
+		}
+		
+		setStatus(StatusEntrega.FINALIZADA);
+		setDataFinalizacao(OffsetDateTime.now());
+	}
+	
+	public boolean podeSerFinalizada() {
+		return StatusEntrega.PENDENTE.equals(getStatus());
+	}
+	
+	public boolean naoPodeSerFinalizada() {
+		return !podeSerFinalizada();
+	}
+	
 }
